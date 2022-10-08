@@ -1,19 +1,12 @@
 import os
 import logging
 from dotenv import load_dotenv
-
-import db
+from aiogram import Bot, Dispatcher, executor, types
 import logic
 
 load_dotenv()
-from aiogram import Bot, Dispatcher, executor, types
 API_TOKEN = os.getenv('BOT')
-
-
-# Configure logging
 logging.basicConfig(level=logging.INFO)
-
-# Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
@@ -27,14 +20,6 @@ async def send_welcome(message: types.Message):
         "   Для того чтобы удалить заметку напишите: удалить ...\n\n"
         "   Для того чтобы увидеть список ваших дел напишите: список")
 
-# @dp.message_handler(commands=['del'])
-# async def send_welcome(message: types.Message):
-#
-#     logic.add_member(message.from_id, message.from_user.username)
-#     await message.answer(
-#         "Привет!\nЯ бот для сохранения заметок!\n\n"
-#         "   Для того чтобы добавить заметку напишите: добавить ...\n\n"
-#         "   Для того чтобы увидеть список ваших дел напишите: список")
 
 @dp.message_handler()
 async def message_handler(message: types.Message):
@@ -44,7 +29,8 @@ async def message_handler(message: types.Message):
     else:
         await message.answer('Ваш список: ')
         for x in answer:
-            await message.answer(x + ' /del' + str(db.get_id_text(x)))
+            # await message.answer(x + ' /del' + str(db.get_id_text(x)))
+            await message.answer(x)
         await message.answer('Судя по вашему списку вы грязное чудовище')
 
 
