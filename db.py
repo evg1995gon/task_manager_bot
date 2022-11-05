@@ -60,3 +60,9 @@ def list_of_all_messages():
     for x in list_of_dirty:
         list_of_pure.append(x[0])
     return list_of_pure
+
+def delete_all(id):
+    number = get_id(id)
+    query = f"delete from tasks where author = '{number}'"
+    cur.execute(query)
+    con.commit()
